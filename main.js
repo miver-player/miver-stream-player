@@ -94,11 +94,13 @@ const createWindow = () => {
 
     // window.setPosition(width/2, height/2, false);
   // Hide the window when it loses focus
+  /*
   window.on('blur', () => {
     if (!window.webContents.isDevToolsOpened()) {
       window.hide()
     }
   })
+  */
 }
 
 const toggleWindow = () => {
