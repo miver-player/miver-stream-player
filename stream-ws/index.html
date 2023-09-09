@@ -9,8 +9,9 @@
     />
     <link rel="manifest" href="app.webmanifest" />
     <link type="text/css" rel="stylesheet" href="css/main.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
+    <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/animate.css" />
+     <style>
       .topright{
         top:0;
         right:0;
@@ -21,6 +22,7 @@
 
   <body>
     <script>
+
 var data45
       var hash = window.location.hash.replace("#", "");
       var args = hash.split(",");
@@ -558,6 +560,8 @@ var data45
           value: "ws://localhost:3000"
         }
 
+        window.gui = gui;
+
         // set gui width
         gui.width = 300;
 
@@ -851,13 +855,24 @@ var data45
   var toastHTML = '<span>Add Websocket URl to continue </span><button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
     M.toast({ html: toastHTML, classes: 'topright', displayLength: 1000000});
   
-
-function toastClicked()
+    function toastClicked()
 {
   // focus wsurl
-  document.getElementById("wsurl").focus();
-  gui.open();
+ // dismiss toast
+  var toastElement = document.querySelector('.toast');
+  var toastInstance = M.Toast.getInstance(toastElement);
+  toastInstance.dismiss();
+  window.gui.open();
+  setTimeout(function(){
+    var x = document.querySelector(".dg.ac input:first-of-type");
+    x.focus();
+    // add tada animation
+    x.className += " animate__animated animate__tada";
+  }, 600);
+
+
 
 }
+
 </script>
   </html>
