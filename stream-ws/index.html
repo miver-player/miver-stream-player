@@ -861,8 +861,14 @@ var data45
   setTimeout(function(){
     var x = document.querySelector(".dg.ac input:first-of-type");
     x.focus();
+    x.style.transition = "all 0.5s ease-in-out";
+    x.style.filter = "invert(1) drop-shadow(0px 0px 10px #fff)";
     // add tada animation
-    x.className += " animate__animated animate__tada";
+    x.className += " animate__animated animate__heartBeat";
+    setTimeout(function(){
+      x.className = x.className.replace(" animate__animated animate__heartBeat", " animate__animated animate__tada");
+      x.style.filter = "invert(1) drop-shadow(0px 0px 10px #fff)";
+    }, 2000);
   }, 600);
 }
 
