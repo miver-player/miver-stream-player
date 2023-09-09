@@ -558,6 +558,13 @@ var data45
           value: "ws://localhost:3000"
         }
 
+        // set gui width
+        gui.width = 300;
+
+
+        // close gui
+        gui.close();
+
         gui.add(wsurl, "value").name("WebSocket Server").onChange(function(){
           startWebSocket(wsurl.value)
         });
@@ -842,13 +849,15 @@ var data45
   
 
   var toastHTML = '<span>Add Websocket URl to continue </span><button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
-    M.toast({ html: toastHTML, classes: 'topright'});
+    M.toast({ html: toastHTML, classes: 'topright', displayLength: 1000000});
   
 
 function toastClicked()
 {
   // focus wsurl
   document.getElementById("wsurl").focus();
+  gui.open();
+
 }
 </script>
   </html>
