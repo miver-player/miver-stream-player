@@ -68,13 +68,10 @@ const createWindow = () => {
       backgroundThrottling: false
     }
   })
- // window.loadURL(`file://${path.join(__dirname, 'models/holistic/index.html')}`)
-    	window.loadFile("./stream-ws/index.html");
-  //  	window.loadFile("./models/pose/index.html");
-    // access camera permission
+    	window.loadFile("./public/index.html");
     
 
-    const { systemPreferences } = require('electron')
+  //  const { systemPreferences } = require('electron')
 
 //const microphone = systemPreferences.askForMediaAccess('microphone');
 //const camera = systemPreferences.askForMediaAccess('camera');
