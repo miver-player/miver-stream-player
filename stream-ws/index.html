@@ -561,8 +561,8 @@ var data45
           value: 0xffffff,
         };
 
-        var wsurl = {
-          value: "ws://localhost:3000"
+        var wsurltext = {
+          text: "ws://localhost:3000"
         }
 
         window.gui = gui;
@@ -574,11 +574,10 @@ var data45
         // close gui
         // gui.close();
 
-        gui.add(wsurl, "value").name("WebSocket Server").onChange(function(){
+        gui.add(wsurltext, "text").name("WebSocket Server").onChange(function(){
           var x = document.querySelector(".dg.ac input:first-of-type");
-          //alert(x.value)
-          //startWebSocket(x.value);
-          startWebSocket(wsurl.value);
+          startWebSocket(x.value);
+          //startWebSocket(wsurltext.text);
         });
         gui
           .add(grid.material.uniforms.uSize1, "value", 2, 100)
@@ -610,6 +609,8 @@ var data45
           .onChange(function () {
             model.children[2].material.color.set(color2.value);
           });
+
+
         grid.receiveShadow = true;
         scene.add(grid);
         var sky = new Sky();
@@ -833,14 +834,20 @@ var data45
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
   />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 <script>
   function startWebSocket(url)
   {
-    var toastElement = document.querySelector('.toast');
-    var toastInstance = M.Toast.getInstance(toastElement);
-    toastInstance.dismiss();
+    try{
+      ws.close();
+    }
+    catch(e)
+    {
+
+    }
+    //var toastElement = document.querySelector('.toast');
+    //var toastInstance = M.Toast.getInstance(toastElement);
+    //toastInstance.dismiss();
         ws = new WebSocket(url);
       
 
@@ -859,21 +866,11 @@ var data45
   // add materialize toast, top right
   
 
-  var toastHTML = '<span>Add Websocket URL to continue </span>'; //<button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
-    M.toast({ html: toastHTML, classes: 'topright', displayLength: 1000000});
-    var x = document.querySelector(".dg.ac input:first-of-type");
+  //var toastHTML = '<span>Add Websocket URL to continue </span>'; //<button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
+  //  M.toast({ html: toastHTML, classes: 'topright', displayLength: 1000000});
 
-    x.focus();
-    x.select();
   
-    function toastClicked()
-{
-  var toastElement = document.querySelector('.toast');
-  var toastInstance = M.Toast.getInstance(toastElement);
-  toastInstance.dismiss();
-  window.gui.open();
-  
-  /*
+
   setTimeout(function(){
     var x = document.querySelector(".dg.ac input:first-of-type");
     x.focus();
@@ -887,8 +884,8 @@ var data45
       x.style.filter = "";
     }, 2000);
   }, 600);
-  */
-}
+  
+
 
 </script>
   </html>

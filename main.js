@@ -7,10 +7,10 @@ let tray = undefined
 let window = undefined
 
 // Don't show the app in the doc
-app.dock.hide()
+//app.dock.hide()
 
 app.on('ready', () => {
-  createTray()
+  //createTray()
   createWindow()
     app.allowRendererProcessReuse = false;
     app.commandLine.appendSwitch('ignore-certificate-errors');
@@ -53,17 +53,17 @@ const createWindow = () => {
     width: 300,
     height: 450,
     show: true,
-    frame: false,
+    frame: true,
     fullscreenable: false,
     icon: path.join(assetsDirectory, 'icon.png'),
-    resizable: false,
+    resizable: true,
     webPreferences: {
       // Prevents renderer process code from not running when window is
       // hidden
          nodeIntegration: true,
         contextIsolation: false,
         'overlay-fullscreen-video': true,
-          focusable: false, 
+         // focusable: false, 
         webSecurity: false,
       backgroundThrottling: false
     }
@@ -89,7 +89,10 @@ const createWindow = () => {
     var x = width - 300;
     window.setSize(x, parseInt((x) * 9 / 16));
 
-    window.setPosition(300, 0, false);
+    // center window
+    window.center();
+
+    // window.setPosition(width/2, height/2, false);
   // Hide the window when it loses focus
   window.on('blur', () => {
     if (!window.webContents.isDevToolsOpened()) {
