@@ -12,10 +12,15 @@
     <script src="js/jquery.min.js"></script>
     <link rel="stylesheet" href="css/animate.min.css" />
      <style>
+      body{
+        
+      }
       .topright{
         top:0;
         right:0;
         position: fixed;
+        margin: 0;
+        padding: 0;
       }
     </style>
   </head>
@@ -570,7 +575,10 @@ var data45
         gui.close();
 
         gui.add(wsurl, "value").name("WebSocket Server").onChange(function(){
-          startWebSocket(wsurl.value)
+          var x = document.querySelector(".dg.ac input:first-of-type");
+          //alert(x.value)
+          //startWebSocket(x.value);
+          startWebSocket(wsurl.value);
         });
         gui
           .add(grid.material.uniforms.uSize1, "value", 2, 100)
@@ -741,12 +749,14 @@ var data45
 
       function updatePose()
       {
-        //console.log(motionFrame);
         var bvhTokens = motionFrame.replace(" \n","").split(" ");
+        console.log(bvhTokens);
 
+        var factor = Math.PI / 180.0;
         var bn = model.getObjectByName("mixamorigHips");
         bn.position.set(parseFloat(bvhTokens[0]),parseFloat(bvhTokens[1]),parseFloat(bvhTokens[2]));
-        //bn.rotation.set( parseFloat(bvhTokens[4]),parseFloat(bvhTokens[3]), parseFloat(bvhTokens[5]));
+        bn.rotation.set( parseFloat(bvhTokens[4])*factor,parseFloat(bvhTokens[5])*factor, parseFloat(bvhTokens[3])*factor);
+
 
       }
       function dothistoInit() {
@@ -849,7 +859,7 @@ var data45
   // add materialize toast, top right
   
 
-  var toastHTML = '<span>Add Websocket URl to continue </span><button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
+  var toastHTML = '<span>Add Websocket URl to continue </span>'; //<button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
     M.toast({ html: toastHTML, classes: 'topright', displayLength: 1000000});
   
     function toastClicked()
@@ -858,6 +868,7 @@ var data45
   var toastInstance = M.Toast.getInstance(toastElement);
   toastInstance.dismiss();
   window.gui.open();
+  /*
   setTimeout(function(){
     var x = document.querySelector(".dg.ac input:first-of-type");
     x.focus();
@@ -871,6 +882,7 @@ var data45
       x.style.filter = "";
     }, 2000);
   }, 600);
+  */
 }
 
 </script>
