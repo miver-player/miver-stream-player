@@ -9,9 +9,14 @@
     />
     <link rel="manifest" href="app.webmanifest" />
     <link type="text/css" rel="stylesheet" href="css/main.css" />
-    <link type="text/css" rel="stylesheet" href="css/rangeslider.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="js/rangeslider.js"></script>
+    <style>
+      .topright{
+        top:0;
+        right:0;
+        position: fixed;
+      }
+    </style>
   </head>
 
   <body>
@@ -836,8 +841,14 @@ var data45
   // add materialize toast, top right
   
 
-    M.toast({ html: "Alert" , classes: 'rounded', position: 'top right'});
+  var toastHTML = '<span>Add Websocket URl to continue </span><button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
+    M.toast({ html: toastHTML, classes: 'topright'});
   
 
+function toastClicked()
+{
+  // focus wsurl
+  document.getElementById("wsurl").focus();
+}
 </script>
   </html>
