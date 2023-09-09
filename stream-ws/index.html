@@ -572,7 +572,7 @@ var data45
 
 
         // close gui
-        gui.close();
+        // gui.close();
 
         gui.add(wsurl, "value").name("WebSocket Server").onChange(function(){
           var x = document.querySelector(".dg.ac input:first-of-type");
@@ -859,8 +859,10 @@ var data45
   // add materialize toast, top right
   
 
-  var toastHTML = '<span>Add Websocket URl to continue </span>'; //<button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
+  var toastHTML = '<span>Add Websocket URL to continue </span>'; //<button onclick="toastClicked()" class="btn-flat toast-action">OK</button>';
     M.toast({ html: toastHTML, classes: 'topright', displayLength: 1000000});
+    x.focus();
+    x.select();
   
     function toastClicked()
 {
@@ -868,6 +870,7 @@ var data45
   var toastInstance = M.Toast.getInstance(toastElement);
   toastInstance.dismiss();
   window.gui.open();
+  
   /*
   setTimeout(function(){
     var x = document.querySelector(".dg.ac input:first-of-type");
