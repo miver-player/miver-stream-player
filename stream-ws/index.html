@@ -10,7 +10,7 @@
     <link rel="manifest" href="app.webmanifest" />
     <link type="text/css" rel="stylesheet" href="css/main.css" />
     <script src="js/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/animate.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
      <style>
       .topright{
         top:0;
@@ -828,6 +828,9 @@ var data45
 <script>
   function startWebSocket(url)
   {
+    var toastElement = document.querySelector('.toast');
+    var toastInstance = M.Toast.getInstance(toastElement);
+    toastInstance.dismiss();
         ws = new WebSocket(url);
       
 
@@ -851,8 +854,6 @@ var data45
   
     function toastClicked()
 {
-  // focus wsurl
- // dismiss toast
   var toastElement = document.querySelector('.toast');
   var toastInstance = M.Toast.getInstance(toastElement);
   toastInstance.dismiss();
@@ -863,9 +864,6 @@ var data45
     // add tada animation
     x.className += " animate__animated animate__tada";
   }, 600);
-
-
-
 }
 
 </script>
