@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Miver Player</title>
+    <title>Miver Streamer</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
@@ -574,8 +574,9 @@ var data45
         // close gui
         // gui.close();
 
-        gui.add(wsurltext, "text").name("WebSocket Server").onChange(function(){
+        gui.add(wsurltext, "text").name("WebSocket URL").onChange(function(){
           var x = document.querySelector(".dg.ac input:first-of-type");
+          document.getElementById("tip").style.display = "none";
           startWebSocket(x.value);
           //startWebSocket(wsurltext.text);
         });
@@ -609,6 +610,7 @@ var data45
           .onChange(function () {
             model.children[2].material.color.set(color2.value);
           });
+
 
 
         grid.receiveShadow = true;
@@ -752,14 +754,75 @@ var data45
       {
         var bvhTokens = motionFrame.replace(" \n","").split(" ");
         console.log(bvhTokens);
-
         var factor = Math.PI / 180.0;
+
         var bn = model.getObjectByName("mixamorigHips");
         bn.position.set(parseFloat(bvhTokens[0]),parseFloat(bvhTokens[1]),parseFloat(bvhTokens[2]));
         bn.rotation.set( parseFloat(bvhTokens[4])*factor,parseFloat(bvhTokens[5])*factor, parseFloat(bvhTokens[3])*factor);
 
+        bn = model.getObjectByName("mixamorigSpine");
+        bn.rotation.set( parseFloat(bvhTokens[7])*factor,parseFloat(bvhTokens[8])*factor, parseFloat(bvhTokens[6])*factor);
+
+        bn = model.getObjectByName("mixamorigSpine1");
+        bn.rotation.set( parseFloat(bvhTokens[10])*factor,parseFloat(bvhTokens[11])*factor, parseFloat(bvhTokens[9])*factor);
+
+        bn = model.getObjectByName("mixamorigNeck");
+        bn.rotation.set( parseFloat(bvhTokens[13])*factor,parseFloat(bvhTokens[14])*factor, parseFloat(bvhTokens[12])*factor);
+
+        bn = model.getObjectByName("mixamorigHead");
+        bn.rotation.set( parseFloat(bvhTokens[16])*factor,parseFloat(bvhTokens[17])*factor, parseFloat(bvhTokens[15])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftShoulder");
+        bn.rotation.set( parseFloat(bvhTokens[19])*factor,parseFloat(bvhTokens[20])*factor, parseFloat(bvhTokens[18])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftArm");
+        bn.rotation.set( parseFloat(bvhTokens[22])*factor,parseFloat(bvhTokens[23])*factor, parseFloat(bvhTokens[21])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftForeArm");
+        bn.rotation.set( parseFloat(bvhTokens[25])*factor,parseFloat(bvhTokens[26])*factor, parseFloat(bvhTokens[24])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftHand");
+        bn.rotation.set( parseFloat(bvhTokens[28])*factor,parseFloat(bvhTokens[29])*factor, parseFloat(bvhTokens[27])*factor);
+
+        bn = model.getObjectByName("mixamorigRightShoulder");
+        bn.rotation.set( parseFloat(bvhTokens[31])*factor,parseFloat(bvhTokens[32])*factor, parseFloat(bvhTokens[30])*factor);
+
+        bn = model.getObjectByName("mixamorigRightArm");
+        bn.rotation.set( parseFloat(bvhTokens[34])*factor,parseFloat(bvhTokens[35])*factor, parseFloat(bvhTokens[33])*factor);
+
+        bn = model.getObjectByName("mixamorigRightForeArm");
+        bn.rotation.set( parseFloat(bvhTokens[37])*factor,parseFloat(bvhTokens[38])*factor, parseFloat(bvhTokens[36])*factor);
+
+        bn = model.getObjectByName("mixamorigRightHand");
+        bn.rotation.set( parseFloat(bvhTokens[40])*factor,parseFloat(bvhTokens[41])*factor, parseFloat(bvhTokens[39])*factor);
+
+        bn = model.getObjectByName("mixamorigRightUpLeg");
+        bn.rotation.set( parseFloat(bvhTokens[43])*factor,parseFloat(bvhTokens[44])*factor, parseFloat(bvhTokens[42])*factor);
+
+        bn = model.getObjectByName("mixamorigRightLeg");
+        bn.rotation.set( parseFloat(bvhTokens[46])*factor,parseFloat(bvhTokens[47])*factor, parseFloat(bvhTokens[45])*factor);
+
+        bn = model.getObjectByName("mixamorigRightFoot");
+        bn.rotation.set( parseFloat(bvhTokens[49])*factor,parseFloat(bvhTokens[50])*factor, parseFloat(bvhTokens[48])*factor);
+
+        bn = model.getObjectByName("mixamorigRightToeBase");
+        bn.rotation.set( parseFloat(bvhTokens[52])*factor,parseFloat(bvhTokens[53])*factor, parseFloat(bvhTokens[51])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftUpLeg");
+        bn.rotation.set( parseFloat(bvhTokens[55])*factor,parseFloat(bvhTokens[56])*factor, parseFloat(bvhTokens[54])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftLeg");
+        bn.rotation.set( parseFloat(bvhTokens[58])*factor,parseFloat(bvhTokens[59])*factor, parseFloat(bvhTokens[57])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftFoot");
+        bn.rotation.set( parseFloat(bvhTokens[61])*factor,parseFloat(bvhTokens[62])*factor, parseFloat(bvhTokens[60])*factor);
+
+        bn = model.getObjectByName("mixamorigLeftToeBase");
+        bn.rotation.set( parseFloat(bvhTokens[64])*factor,parseFloat(bvhTokens[65])*factor, parseFloat(bvhTokens[63])*factor);
 
       }
+
+
       function dothistoInit() {
         rightArm = model.getObjectByName("mixamorigRightArm");
         rightArm.quaternion.set(0, 0, 0, 1);
@@ -824,7 +887,7 @@ var data45
 
   </script>
 
-  <div id="tip" style="z-index:999999999; background-image: url(./assets/tip.png); background-position: 50%; background-repeat: no-repeat; position: absolute; top:100vh; transition: 2s;right:300px"></div>
+  <div id="tip" style="z-index:999999999; background-size:contain; background-color:transparent; background-image:url(./tip.png); height:100px;width:400px;background-position: 50%; background-repeat: no-repeat; position: absolute; margin-top:100vh; transition:margin-top 2s ease 0s;right:300px"></div>
 
 
   </body>
@@ -838,7 +901,8 @@ var data45
   />
 
 <script>
-  document.getElementById("tip").style.top = "0vh";
+  document.getElementById("tip").style.marginTop = "0";
+  document.getElementById("tip").style.filter = "invert(1)";
   function startWebSocket(url)
   {
     try{
