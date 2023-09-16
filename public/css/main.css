@@ -41,19 +41,21 @@ a, button, input, select {
 	pointer-events: auto;
 }
 
-.dg.ac {
+#controls {
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	z-index: 2 !important; 
 }
-.dg.ac div input {
-    height: 15px;
+#controls div input,
+#controls div select {
+    height: 20px;
     font-size: 12px;
     margin: 0;
     padding: 0;
     line-height: 10px;
+	display: block;
 }
 
 #overlay {

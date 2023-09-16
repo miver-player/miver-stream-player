@@ -87,7 +87,10 @@ var data45
       //import { BVHLoader } from "./js/BVHLoader.js";
 
       import * as dat from "https://cdn.jsdelivr.net/gh/miver-player/miver-player.github.io@latest/docs/js/dat.gui.js";
-      const gui = new dat.GUI();
+      const gui = new dat.GUI({autoPlace: false});
+
+      const containerEl = document.querySelector('#controls');
+containerEl.appendChild(gui.domElement);
 
       var InfiniteGridHelper = function InfiniteGridHelper(
         size1,
@@ -562,7 +565,8 @@ var data45
         };
 
         var wsurltext = {
-          text: "ws://localhost:3000"
+          text: "ws://localhost:3000",
+          kind: "bvh"
         }
 
         window.gui = gui;
@@ -574,12 +578,32 @@ var data45
         // close gui
         // gui.close();
 
-        gui.add(wsurltext, "text").name("WebSocket URL").onChange(function(){
+
+        // drop down
+
+
+        
+
+        window.inputFormat = "bvh";
+
+        const netFolder = gui.addFolder('Network Settings');
+
+        netFolder.add(wsurltext, "text").name("WebSocket URL").onChange(function(){
           var x = document.querySelector(".dg.ac input:first-of-type");
           document.getElementById("tip").style.display = "none";
           startWebSocket(x.value);
           //startWebSocket(wsurltext.text);
         });
+
+        var formats = ["bvh", "rokoko"]
+
+        var x = netFolder.add(wsurltext, "kind", formats).name("Input Format").onChange(function(value){
+          window.inputFormat = value;
+          console.log(window.inputFormat);
+        });
+
+        x.setValue("bvh");
+
         gui
           .add(grid.material.uniforms.uSize1, "value", 2, 100)
           .step(1)
@@ -752,8 +776,10 @@ var data45
 
       function updatePose()
       {
+        // console.log(motionFrame);
+
         var bvhTokens = motionFrame.replace(" \n","").split(" ");
-        console.log(bvhTokens);
+        //console.log(bvhTokens);
         var factor = Math.PI / 180.0;
 
         var bn = model.getObjectByName("mixamorigHips");
@@ -890,7 +916,9 @@ var data45
 
   <div id="tip" style="z-index:999999999; background-size:contain; background-color:transparent; background-image:url(./tip.png); height:100px;width:400px;background-position: 50%; background-repeat: no-repeat; position: absolute; margin-top:100vh; transition:margin-top 2s ease 0s;right:300px"></div>
 
-
+<div id="controls"
+  style="position: fixed;top:0;right:0;width:auto;height:auto;z-index: 99999999;"
+></div>
   </body>
   <link
     href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -923,7 +951,7 @@ var data45
         //document.getElementById("message").innerHTML = message.data;
         //console.log(new Date(), message.data);
         millis++;
-        motionFrame = message.data;
+        motionFrame = message.data.toString();
       };
   }
 
