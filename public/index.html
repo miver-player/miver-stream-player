@@ -565,7 +565,9 @@ containerEl.appendChild(gui.domElement);
         };
 
         var wsurltext = {
-          text: "ws://localhost:3000",
+          text: "ws://localhost:3000"
+        }
+        var inpF = {
           kind: "bvh"
         }
 
@@ -589,7 +591,7 @@ containerEl.appendChild(gui.domElement);
         const netFolder = gui.addFolder('Network Settings');
 
         netFolder.add(wsurltext, "text").name("WebSocket URL").onChange(function(){
-          var x = document.querySelector(".dg.ac input:first-of-type");
+          var x = document.querySelector("#controls input:first-of-type");
           document.getElementById("tip").style.display = "none";
           startWebSocket(x.value);
           //startWebSocket(wsurltext.text);
@@ -597,12 +599,14 @@ containerEl.appendChild(gui.domElement);
 
         var formats = ["bvh", "rokoko"]
 
-        var x = netFolder.add(wsurltext, "kind", formats).name("Input Format").onChange(function(value){
+        var x = netFolder.add(inpF, "kind", formats).name("Input Format").onChange(function(value){
           window.inputFormat = value;
           console.log(window.inputFormat);
         });
 
         x.setValue("bvh");
+
+        netFolder.open();
 
         gui
           .add(grid.material.uniforms.uSize1, "value", 2, 100)
@@ -766,7 +770,12 @@ containerEl.appendChild(gui.domElement);
          
         if(millis != lastTick){
           millis = lastTick;
-          updatePose();
+          if(inputFormat === "bvh"){
+            updatePoseBVH();
+          }
+          else{
+            updatePoseRokoko();
+          }
           stats.update();
         }
                 renderer.render(scene, camera);
@@ -774,7 +783,21 @@ containerEl.appendChild(gui.domElement);
         
       }
 
-      function updatePose()
+
+
+
+      function updatePoseRokoko()
+      {
+        // console.log(motionFrame);
+
+        var motionFO = JSON.parse(motionFrame);
+        //console.log(motionFO);
+        //console.log(bvhTokens);
+        var factor = Math.PI / 180.0;
+      }
+
+
+      function updatePoseBVH()
       {
         // console.log(motionFrame);
 
