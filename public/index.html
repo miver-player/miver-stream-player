@@ -524,6 +524,8 @@ containerEl.appendChild(gui.domElement);
 
       init();
 
+
+
       function init() {
         const container = document.createElement("div");
         document.body.appendChild(container);
@@ -685,9 +687,9 @@ containerEl.appendChild(gui.domElement);
 
 
           scene_bvh = new THREE.Scene();
+
           animate_bvh();
 
-          renderer.render(scene, camera);
 
           /*
           const loader_bvh = new BVHLoader();
@@ -763,10 +765,13 @@ containerEl.appendChild(gui.domElement);
       var message = "";
 
       function animate_bvh() {
+        renderer.render(scene, camera);
+
         count++;
         requestAnimationFrame(animate_bvh);
 
-        const delta = clock_bvh.getDelta();
+        //const delta = clock_bvh.getDelta();
+
          
         if(millis != lastTick){
           millis = lastTick;
@@ -779,7 +784,6 @@ containerEl.appendChild(gui.domElement);
           stats.update();
         }
         
-        renderer.render(scene, camera);
 
         
       }
@@ -797,7 +801,7 @@ containerEl.appendChild(gui.domElement);
 
         var bn = model.getObjectByName("mixamorigHips");
         var m = motionFO["hip"];
-        bn.quaternion.set( m.rotation.w , m.rotation.x, m.rotation.y, m.rotation.z);
+        bn.quaternion.set( m.rotation.x, m.rotation.y, m.rotation.z, m.rotation.w);
         bn.position.set( m.position.x , m.position.y, m.position.z);
 
         setRokokoBone("mixamorigSpine", motionFO["spine"]);
@@ -828,7 +832,7 @@ containerEl.appendChild(gui.domElement);
       {
           var bn = model.getObjectByName(rigname); 
           //console.log(m);
-          bn.quaternion.set( m.rotation.w , m.rotation.x, m.rotation.y, m.rotation.z);
+          bn.quaternion.set( m.rotation.x, m.rotation.y, m.rotation.z, m.rotation.w);
           //bn.position.set( m.position.x , m.position.y, m.position.z);
       }
 
