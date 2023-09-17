@@ -692,7 +692,7 @@ containerEl.appendChild(gui.domElement);
           /*
           const loader_bvh = new BVHLoader();
           console.log(inputFile);
-          loader_bvh.load(inputFile || bvhfile, function (result) {
+          loader_bvh.load("bvh/blank.bvh", function (result) {
             console.log(result)
             bvhObj = result;
             animationDuration = result.clip.duration;
@@ -778,22 +778,58 @@ containerEl.appendChild(gui.domElement);
           }
           stats.update();
         }
-                renderer.render(scene, camera);
+        
+        renderer.render(scene, camera);
 
         
       }
 
 
 
+      function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+      }
 
       function updatePoseRokoko()
       {
-        // console.log(motionFrame);
-
         var motionFO = JSON.parse(motionFrame);
-        //console.log(motionFO);
-        //console.log(bvhTokens);
-        var factor = Math.PI / 180.0;
+        // var bones = Object.keys(motionFO);
+
+        var bn = model.getObjectByName("mixamorigHips");
+        var m = motionFO["hip"];
+        bn.quaternion.set( m.rotation.w , m.rotation.x, m.rotation.y, m.rotation.z);
+        bn.position.set( m.position.x , m.position.y, m.position.z);
+
+        setRokokoBone("mixamorigSpine", motionFO["spine"]);
+        setRokokoBone("mixamorigSpine1", motionFO["chest"]);
+        setRokokoBone("mixamorigNeck", motionFO["neck"]);
+        setRokokoBone("mixamorigHead", motionFO["head"]);
+        setRokokoBone("mixamorigLeftShoulder", motionFO["leftShoulder"]);
+        setRokokoBone("mixamorigLeftArm", motionFO["leftArm"]);
+        setRokokoBone("mixamorigLeftForeArm", motionFO["leftForeArm"]);
+        setRokokoBone("mixamorigLeftHand", motionFO["leftHand"]);
+        setRokokoBone("mixamorigRightShoulder", motionFO["rightShoulder"]);
+        setRokokoBone("mixamorigRightArm", motionFO["rightArm"]);
+        setRokokoBone("mixamorigRightForeArm", motionFO["rightForeArm"]);
+        setRokokoBone("mixamorigRightHand", motionFO["rightHand"]);
+        setRokokoBone("mixamorigLeftUpLeg", motionFO["leftUpLeg"]);
+        setRokokoBone("mixamorigLeftLeg", motionFO["leftLeg"]);
+        setRokokoBone("mixamorigLeftFoot", motionFO["leftFoot"]);
+        setRokokoBone("mixamorigLeftToeBase", motionFO["leftToeBase"]);
+        setRokokoBone("mixamorigRightUpLeg", motionFO["rightUpLeg"]);
+        setRokokoBone("mixamorigRightLeg", motionFO["rightLeg"]);
+        setRokokoBone("mixamorigRightFoot", motionFO["rightFoot"]);
+        setRokokoBone("mixamorigRightToeBase", motionFO["rightToeBase"]);
+
+        
+      }
+
+      function setRokokoBone(rigname, m)
+      {
+          var bn = model.getObjectByName(rigname); 
+          //console.log(m);
+          bn.quaternion.set( m.rotation.w , m.rotation.x, m.rotation.y, m.rotation.z);
+          //bn.position.set( m.position.x , m.position.y, m.position.z);
       }
 
 
