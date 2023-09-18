@@ -809,6 +809,7 @@ gui
         bn.quaternion.set( m.rotation.x, m.rotation.y, m.rotation.z, m.rotation.w);
         bn.position.set( m.position.x , m.position.y, m.position.z);
 
+        /*
         setRokokoBone("mixamorigSpine", motionFO["spine"]);
         setRokokoBone("mixamorigSpine1", motionFO["chest"]);
         setRokokoBone("mixamorigNeck", motionFO["neck"]);
@@ -816,20 +817,7 @@ gui
         setRokokoBone("mixamorigLeftShoulder", motionFO["leftShoulder"]);
         setRokokoBone("mixamorigLeftArm", motionFO["leftArm"]);
         setRokokoBone("mixamorigLeftForeArm", motionFO["leftForeArm"]);
-        setRokokoBone("mixamorigLeftHand", motionFO["leftHand"]);
-        setRokokoBone("mixamorigRightShoulder", motionFO["rightShoulder"]);
-        setRokokoBone("mixamorigRightArm", motionFO["rightArm"]);
-        setRokokoBone("mixamorigRightForeArm", motionFO["rightForeArm"]);
-        setRokokoBone("mixamorigRightHand", motionFO["rightHand"]);
-        setRokokoBone("mixamorigLeftUpLeg", motionFO["leftUpLeg"]);
-        setRokokoBone("mixamorigLeftLeg", motionFO["leftLeg"]);
-        setRokokoBone("mixamorigLeftFoot", motionFO["leftFoot"]);
-        setRokokoBone("mixamorigLeftToeBase", motionFO["leftToeBase"]);
-        setRokokoBone("mixamorigRightUpLeg", motionFO["rightUpLeg"]);
-        setRokokoBone("mixamorigRightLeg", motionFO["rightLeg"]);
-        setRokokoBone("mixamorigRightFoot", motionFO["rightFoot"]);
-        setRokokoBone("mixamorigRightToeBase", motionFO["rightToeBase"]);
-
+        */
         
       }
 
@@ -838,7 +826,7 @@ gui
           var bn = model.getObjectByName(rigname); 
           //console.log(m);
           bn.quaternion.set( m.rotation.x, m.rotation.y, m.rotation.z, m.rotation.w);
-          bn.position.set( m.position.x , m.position.y, m.position.z);
+          //bn.position.set( m.position.x , m.position.y, m.position.z);
       }
 
 
