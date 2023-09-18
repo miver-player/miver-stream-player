@@ -684,7 +684,7 @@ gui
 
           scene_bvh = new THREE.Scene();
 
-          //animate_bvh();
+          animate_bvh();
 
      
           renderer.render(scene, camera);
@@ -766,10 +766,14 @@ gui
       var message = "";
 
       function animate_bvh() {
+        requestAnimationFrame(animate_bvh);
+
+        if(!window.startS){
+          return;
+        }
         renderer.render(scene, camera);
 
         count++;
-        requestAnimationFrame(animate_bvh);
 
         //const delta = clock_bvh.getDelta();
 
@@ -795,7 +799,7 @@ gui
         return string.charAt(0).toUpperCase() + string.slice(1);
       }
 
-      function updatePoseRokoko()
+     var updatePoseRokoko = function()
       {
         var motionFO = JSON.parse(motionFrame);
         // var bones = Object.keys(motionFO);
@@ -838,7 +842,7 @@ gui
       }
 
 
-      function updatePoseBVH()
+      var updatePoseBVH = function()
       {
         // console.log(motionFrame);
 
@@ -914,6 +918,7 @@ gui
       }
 
 
+   
       function dothistoInit() {
         rightArm = model.getObjectByName("mixamorigRightArm");
         rightArm.quaternion.set(0, 0, 0, 1);
@@ -1023,9 +1028,12 @@ gui
         if(x.length > 30){
           millis++;
           motionFrame = x;
+          window.startS = true;
         }
       };
   }
+
+  window.startS = false;
 
   var motionFrame = "";
   var millis = 0;
