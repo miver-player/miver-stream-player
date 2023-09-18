@@ -87,10 +87,19 @@ var data45
       //import { BVHLoader } from "./js/BVHLoader.js";
 
       import * as dat from "https://cdn.jsdelivr.net/gh/miver-player/miver-player.github.io@latest/docs/js/dat.gui.js";
+   
+   
       const gui = new dat.GUI({autoPlace: false});
 
       const containerEl = document.querySelector('#controls');
 containerEl.appendChild(gui.domElement);
+
+window.gui = gui;
+
+
+
+
+
 
       var InfiniteGridHelper = function InfiniteGridHelper(
         size1,
@@ -556,7 +565,10 @@ containerEl.appendChild(gui.domElement);
         // Grid
 
         grid = new InfiniteGridHelper(50, 50, 0x000000, 100000);
-        const color = {
+// set gui width
+gui.width = 300;
+
+const color = {
           value: 0xffffff,
         };
         const color1 = {
@@ -573,75 +585,59 @@ containerEl.appendChild(gui.domElement);
           kind: "bvh"
         }
 
-        window.gui = gui;
 
-        // set gui width
-        gui.width = 300;
+window.inputFormat = "bvh";
 
+const netFolder = gui.addFolder('Network Settings');
 
-        // close gui
-        // gui.close();
+netFolder.add(wsurltext, "text").name("WebSocket URL").onChange(function(){
+  var x = document.querySelector("#controls input:first-of-type");
+  document.getElementById("tip").style.display = "none";
+  startWebSocket(x.value);
+  //startWebSocket(wsurltext.text);
+});
 
+var formats = ["bvh", "rokoko"]
 
-        // drop down
+window.chooseFormat = netFolder.add(inpF, "kind", formats).name("Input Format").onChange(function(value){
+  window.inputFormat = value;
+  console.log(window.inputFormat);
+});
 
+window.chooseFormat.setValue("bvh");
 
-        
-
-        window.inputFormat = "bvh";
-
-        const netFolder = gui.addFolder('Network Settings');
-
-        netFolder.add(wsurltext, "text").name("WebSocket URL").onChange(function(){
-          var x = document.querySelector("#controls input:first-of-type");
-          document.getElementById("tip").style.display = "none";
-          startWebSocket(x.value);
-          //startWebSocket(wsurltext.text);
-        });
-
-        var formats = ["bvh", "rokoko"]
-
-        var x = netFolder.add(inpF, "kind", formats).name("Input Format").onChange(function(value){
-          window.inputFormat = value;
-          console.log(window.inputFormat);
-        });
-
-        x.setValue("bvh");
-
-        netFolder.open();
-
+netFolder.open();
         gui
-          .add(grid.material.uniforms.uSize1, "value", 2, 100)
-          .step(1)
-          .name("Floor Size 1");
-        gui
-          .add(grid.material.uniforms.uSize2, "value", 2, 1000)
-          .step(1)
-          .name("Floor Size 2");
-        gui
-          .add(grid.material.uniforms.uDistance, "value", 100, 10000)
-          .step(1)
-          .name("Floor Distance");
-        gui
-          .addColor(color, "value")
-          .name("Grid Lines")
-          .onChange(function () {
-            grid.material.uniforms.uColor.value.set(color.value);
-          });
-        gui
-          .addColor(color1, "value")
-          .name("Joints")
-          .onChange(function () {
-            model.children[1].material.color.set(color1.value);
-          });
-        gui
-          .addColor(color2, "value")
-          .name("Bones")
-          .onChange(function () {
-            model.children[2].material.color.set(color2.value);
-          });
-
-
+  .add(grid.material.uniforms.uSize1, "value", 2, 100)
+  .step(1)
+  .name("Floor Size 1");
+gui
+  .add(grid.material.uniforms.uSize2, "value", 2, 1000)
+  .step(1)
+  .name("Floor Size 2");
+gui
+  .add(grid.material.uniforms.uDistance, "value", 100, 10000)
+  .step(1)
+  .name("Floor Distance");
+gui
+  .addColor(color, "value")
+  .name("Grid Lines")
+  .onChange(function () {
+    grid.material.uniforms.uColor.value.set(color.value);
+  });
+gui
+  .addColor(color1, "value")
+  .name("Joints")
+  .onChange(function () {
+    model.children[1].material.color.set(color1.value);
+  });
+gui
+  .addColor(color2, "value")
+  .name("Bones")
+  .onChange(function () {
+    model.children[2].material.color.set(color2.value);
+  });
+  
 
         grid.receiveShadow = true;
         scene.add(grid);
@@ -688,8 +684,10 @@ containerEl.appendChild(gui.domElement);
 
           scene_bvh = new THREE.Scene();
 
-          animate_bvh();
+          //animate_bvh();
 
+     
+          renderer.render(scene, camera);
 
           /*
           const loader_bvh = new BVHLoader();
@@ -739,6 +737,9 @@ containerEl.appendChild(gui.domElement);
         // stats
         stats = new Stats();
         container.appendChild(stats.dom);
+
+
+        animate_bvh();
       }
 
       function onWindowResize() {
@@ -833,7 +834,7 @@ containerEl.appendChild(gui.domElement);
           var bn = model.getObjectByName(rigname); 
           //console.log(m);
           bn.quaternion.set( m.rotation.x, m.rotation.y, m.rotation.z, m.rotation.w);
-          //bn.position.set( m.position.x , m.position.y, m.position.z);
+          bn.position.set( m.position.x , m.position.y, m.position.z);
       }
 
 
@@ -1012,9 +1013,17 @@ containerEl.appendChild(gui.domElement);
 
       ws.onmessage = function (message) {
         //document.getElementById("message").innerHTML = message.data;
-        //console.log(new Date(), message.data);
-        millis++;
-        motionFrame = message.data.toString();
+        //console.log(new Date(), message.data)
+        
+        var x = message.data.toString();
+        if(x === "sending rokoko json"){
+          window.inputFormat = "rokoko";
+          window.chooseFormat.setValue("rokoko");
+        }
+        if(x.length > 30){
+          millis++;
+          motionFrame = x;
+        }
       };
   }
 
